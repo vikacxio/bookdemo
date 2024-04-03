@@ -33,8 +33,21 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
     }
   }
 
-  getBook(order: Order) {
-    return API.get("books", `/books/${order.bookId}`, null);
+  async getBook(order: Order) {
+    //return API.get("books", `/books/${order.bookId}`, null);
+
+
+
+    const bookOrder = await fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
+    method: 'POST',
+    //	mode: 'no-cors',
+    headers: {  'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+  });
+
+  let data = await bookOrder.json();
+  const filtered = data.data.filter((item:any) => item.id === `${order.bookId}`);
+  //console.log(filtered[0]);
+  return filtered[0];
   }
 
   render() {
