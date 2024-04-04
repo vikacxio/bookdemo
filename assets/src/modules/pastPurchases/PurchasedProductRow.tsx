@@ -3,7 +3,7 @@ import "../../common/styles/productRow.css";
 import StarRating from "../../common/starRating/StarRating";
 import { API } from "aws-amplify";
 import AddToCart from "../../common/AddToCart";
-import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
+//import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
 import { Book } from "../bestSellers/BestSellerProductRow";
 import { Order } from "../cart/CartProductRow";
 
@@ -76,7 +76,7 @@ export class PurchasedProductRow extends React.Component<PurchasedProductRowProp
               </div>
             </h3>
             <small>{this.state.book.category}</small>
-            <FriendRecommendations bookId={this.props.order.bookId} />
+          {/*  <FriendRecommendations bookId={this.props.order.bookId} />*/}
             <div>
               Rating
               <AddToCart bookId={this.state.book.id} price={this.state.book.price} variant="buyAgain" />

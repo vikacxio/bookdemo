@@ -40,11 +40,11 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
     
 
     try {
-      const response = await this.listOrders();
-      let data = await response.json();
-      let jsondata= JSON.stringify(data);
-      const parsedata = JSON.parse(jsondata);
-      const orders = parsedata.data;
+      const orders = await this.listOrders();
+      // let data = await response.json();
+      // let jsondata= JSON.stringify(data);
+      // const parsedata = JSON.parse(jsondata);
+      // const orders = parsedata.data;
    
       console.log(orders);
       this.setState({ 
@@ -57,13 +57,13 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
   }
 
 listOrders() {
-  //  return API.get("orders", "/orders", null);
+   return API.get("orders", "/orders", null);
 
-  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/orderlist?result=true&&blocking=true', {
-    method: 'POST',
-    //	mode: 'no-cors',
-    headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
-  });
+  // return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/orderlist?result=true&&blocking=true', {
+  //   method: 'POST',
+  //   //	mode: 'no-cors',
+  //   headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+  // });
   
   }
 
