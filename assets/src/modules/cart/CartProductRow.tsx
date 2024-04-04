@@ -2,7 +2,7 @@ import React from "react";
 import "../../common/styles/productRow.css";
 //import { API } from "aws-amplify";
 import StarRating from "../../common/starRating/StarRating";
-import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
+//import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
 import { Glyphicon } from "react-bootstrap";
 import { Book } from "../bestSellers/BestSellerProductRow";
 
@@ -132,7 +132,7 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
             <p>
               <small>{this.state.book.category}</small>
             </p>
-            <FriendRecommendations bookId={this.props.order.bookId} />
+            {/*<FriendRecommendations bookId={this.props.order.bookId} />*/}
             <div>
               Rating
               <div className="pull-right">

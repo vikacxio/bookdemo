@@ -8,6 +8,7 @@ import bestSellers from "../../images/bestSellers.png";
 import yourshoppingcart from "../../images/yourshoppingcart.png";
 import { Order } from "../cart/CartProductRow";
 
+
 interface PastPurchasesProps {}
 
 interface Purchases {
@@ -36,9 +37,16 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
   async componentDidMount() {
     const userInfo = await Auth.currentUserInfo();
     this.setState({ userInfo })
+    
 
     try {
-      const orders = await this.listOrders();
+      const response = await this.listOrders();
+      let data = await response.json();
+      let jsondata= JSON.stringify(data);
+      const parsedata = JSON.parse(jsondata);
+      const orders = parsedata.data;
+   
+      console.log(orders);
       this.setState({ 
         orders: orders,
         isLoading: false
@@ -48,8 +56,15 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
     }
   }
 
-  listOrders() {
-    return API.get("orders", "/orders", null);
+listOrders() {
+  //  return API.get("orders", "/orders", null);
+
+  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/orderlist?result=true&&blocking=true', {
+    method: 'POST',
+    //	mode: 'no-cors',
+    headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+  });
+  
   }
 
   getPrettyDate = (orderDate: number) => {
@@ -79,8 +94,8 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
           }
           
           <div className="well-bs no-margin-top no-padding col-md-12">
-          <a href="/best"><img src={bestSellers} alt="Best sellers" className="checkout-img no-padding" /></a>
-          <a href="/cart"><img src={yourshoppingcart} alt="Shopping cart" className="checkout-img no-padding" /></a>
+        {/* <a href="/best"><img src={bestSellers} alt="Best sellers" className="checkout-img no-padding" /></a>
+       */ }  <a href="/cart"><img src={yourshoppingcart} alt="Shopping cart" className="checkout-img no-padding" /></a>
           
           </div>
         </div>

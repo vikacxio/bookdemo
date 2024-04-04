@@ -47,7 +47,7 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
   }
 
 
-  
+
 
   async listOrdersInCart() {
     //return API.get("cart", "/cart", null);
@@ -95,16 +95,38 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
     });
   }
 
-  onCheckout = () => {
+   onCheckout = async() => {
     const orders = this.state.orders;
-    API.post("orders", "/orders", {
-      body: {
-        books: orders
-      }
-    }).then(() => this.setState({
-      toConfirm: true
-    }));
+    // API.post("orders", "/orders", {
+    //   body: {
+    //     books: orders
+    //   }
+    // }).then(() => this.setState({
+    //   toConfirm: true
+    // }));
+
+    const requestBodyCart = {
+      customerId: "bovyva@closetab.email",
+      books: orders
+  };
+
+
+    const getCart = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/checkout?blocking=true&result=true', {
+    method: 'POST',
+    body: JSON.stringify(requestBodyCart),
+    //	mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+  }).then(() => this.setState({
+    toConfirm: true
+  }));
+ 
   }
+
+
+
+
+
+  
 
   render() {
     if (this.state.toConfirm) return <Redirect to='/checkout-confirm' />

@@ -46,7 +46,7 @@ export default class CategoryView extends Component<CategoryViewProps> {
       <div className="Category">
         <SearchBar />
         <CategoryNavBar />
-        <BestSellersBar />
+       {/* <BestSellersBar />*/}
         <img src={this.getImage()} alt={`${this.getImage()} hero`} className="img-fluid full-width top-hero-padding" />
         <CategoryGallery match={this.props.match} />
       </div>
