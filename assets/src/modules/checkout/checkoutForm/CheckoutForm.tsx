@@ -67,6 +67,8 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
   })
   const data = await getCart.json();
   return data.data;
+
+ //return API.get("cart", "/cart", null);
   }
 
 
@@ -97,11 +99,12 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
 
    onCheckout = async() => {
     const orders = this.state.orders;
-    // API.post("orders", "/orders", {
-    //   body: {
-    //     books: orders
-    //   }
-    // }).then(() => this.setState({
+    API.post("orders", "/orders", {
+      body: {
+        books: orders
+      }
+    })
+    // .then(() => this.setState({
     //   toConfirm: true
     // }));
 
