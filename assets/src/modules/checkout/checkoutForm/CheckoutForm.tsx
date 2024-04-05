@@ -39,6 +39,7 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
       this.setState({
         orders: orders
       });
+      console.log(orders)
     } catch (e) {
       alert(e);
     }
@@ -50,6 +51,8 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
 
 
   async listOrdersInCart() {
+
+    //old api call
     //return API.get("cart", "/cart", null);
 
 
@@ -58,17 +61,16 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
       customerId: "bovyva@closetab.email"
   };
 
-
+  // new api call
     const getCart = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getCart?blocking=true&result=true', {
     method: 'POST',
     body: JSON.stringify(requestBodyCart),
-    //	mode: 'no-cors',
     headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   })
   const data = await getCart.json();
   return data.data;
 
- //return API.get("cart", "/cart", null);
+ 
   }
 
 
@@ -99,11 +101,14 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
 
    onCheckout = async() => {
     const orders = this.state.orders;
-    API.post("orders", "/orders", {
-      body: {
-        books: orders
-      }
-    })
+
+
+   //old api call
+    // API.post("orders", "/orders", {
+    //   body: {
+    //     books: orders
+    //   }
+    // })
     // .then(() => this.setState({
     //   toConfirm: true
     // }));
@@ -113,11 +118,10 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
       books: orders
   };
 
-
-    const getCart = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/checkout?blocking=true&result=true', {
+  //new api call
+    await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/checkout?blocking=true&result=true', {
     method: 'POST',
     body: JSON.stringify(requestBodyCart),
-    //	mode: 'no-cors',
     headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   }).then(() => this.setState({
     toConfirm: true

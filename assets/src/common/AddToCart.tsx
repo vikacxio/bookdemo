@@ -35,15 +35,15 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
       customerId: "bovyva@closetab.email"
   };
 
-  console.log(this.props.bookId);
+ 
 
-  
+  //old api call
     //const bookInCart = await API.get("cart", `/cart/${this.props.bookId}`, null);
 
+    //new api call
     const bookCartData = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getCart?blocking=true&result=true', {
       method: 'POST',
       body: JSON.stringify(requestBody),
-      //	mode: 'no-cors',
       headers: { 
         'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
      });
@@ -55,7 +55,20 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
     
 
     // if the book already exists in the cart, increase the quantity
-    if (bookInCart.length!=0) {
+    if (bookInCart.length!==0) {
+
+      //old api call
+       // API.put("cart", "/cart", {
+      //   body: {
+      //     bookId: this.props.bookId,
+      //     quantity: bookInCart.quantity + 1
+      //   }
+      // }).then(() => this.setState({
+      //   toCart: true
+      // }));
+
+
+      //new api call
       var requestBodyUpdate = {
   
         customerId: "bovyva@closetab.email",
@@ -72,14 +85,7 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
       }));
 
 
-      // API.put("cart", "/cart", {
-      //   body: {
-      //     bookId: this.props.bookId,
-      //     quantity: bookInCart.quantity + 1
-      //   }
-      // }).then(() => this.setState({
-      //   toCart: true
-      // }));
+     
     }
 
     // if the book does not exist in the cart, add it
@@ -92,20 +98,8 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
          quantity: 1,
     };
 
-    console.log(requestBodyCart);
-
-
-      const postInCart = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/mongocart?blocking=true&result=true', {
-      method: 'POST',
-      body: JSON.stringify(requestBodyCart),
-      //	mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
-    }).then(() => this.setState({
-      toCart: true
-    }));
-  }
-}
-      // API.post("cart", "/cart", {
+      //old api call
+       // API.post("cart", "/cart", {
       //   body: {
       //     bookId: this.props.bookId,
       //     price: this.props.price,
@@ -114,6 +108,18 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
       // }).then(() => this.setState({
       //   toCart: true
       // }));
+
+    //new api call
+     await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/mongocart?blocking=true&result=true', {
+      method: 'POST',
+      body: JSON.stringify(requestBodyCart),
+      headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+    }).then(() => this.setState({
+      toCart: true
+    }));
+  }
+}
+   
      
 
   getVariant = () => {

@@ -28,18 +28,10 @@ export class CategoryGalleryTeaser extends React.Component<CategoryGalleryTeaser
 
 
       let response = await this.listBooks();
-      //console.log(response)
       let data = await response.json();
       const filtered = data.data.filter((item:any) => item.category === "Cookbooks");
 
-      console.log(filtered);
-    // books(filtered);
       this.setState({ books:filtered });
-      //console.log(data+"from api")
-     
-    
-      // const books = await this.listBooks();
-      // this.setState({ books });
     } catch (e) {
       alert(e);
     }
@@ -48,13 +40,17 @@ export class CategoryGalleryTeaser extends React.Component<CategoryGalleryTeaser
   }
 
   listBooks() {
+    //old api call
+    //   return API.get("books", "/books?category=Cookbooks", null);
+
+
+    //new api call
 
   return fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
     method: 'POST',
-    //	mode: 'no-cors',
     headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
-  //   return API.get("books", "/books?category=Cookbooks", null);
+  
    }
 
   render() {

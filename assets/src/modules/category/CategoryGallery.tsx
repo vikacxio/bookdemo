@@ -31,9 +31,7 @@ export class CategoryGallery extends React.Component<CategoryGalleryProps, Categ
       const filtered = data.data.filter((item:any) => item.category === `${this.props.match.params.id}`);
 
       console.log(filtered);
-    // books(filtered);
       this.setState({ books:filtered });
-     // this.setState({ books });
     } catch (e) {
       alert(e);
     }
@@ -42,14 +40,22 @@ export class CategoryGallery extends React.Component<CategoryGalleryProps, Categ
   }
 
   listBooks() {
+
+
+    //old api call
+     // return API.get("books", `/books?category=${this.props.match.params.id}`, null);
+
+
+
+
+     //new api call
     return fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
     method: 'POST',
-    //	mode: 'no-cors',
     headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
 
-  //OlD
-   // return API.get("books", `/books?category=${this.props.match.params.id}`, null);
+
+  
   }
 
   render() {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { CategoryNavBar } from "../category/categoryNavBar/CategoryNavBar";
 import { SearchBar } from "../search/searchBar/SearchBar";
 import { CheckoutForm } from "./checkoutForm/CheckoutForm";
-
+console.log("testcheckout")
 export default class Checkout extends Component {
   render() {
     return (

@@ -46,12 +46,14 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
   }
 
   async getBook(order: Order) {
+
+    //old api call
     //return API.get("books", `/books/${order.bookId}`, null);
     console.log(this.props.order.quantity +" from qua");
 
+    //new api call
     const bookOrder = await fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
     method: 'POST',
-    //	mode: 'no-cors',
     headers: {  'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
 
@@ -68,6 +70,16 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
   onRemove = async () => {
     this.setState({ removeLoading: true });
 
+    //old api call
+        // API.del("cart", "/cart", {
+    //   body: {
+    //     bookId: this.props.order.bookId,
+    //   }
+    // });
+
+
+
+    //new api call
     var requestBodyDelete = {
   
       "customerId": "bovyva@closetab.email",
@@ -76,16 +88,11 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
   await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/deleteCart?blocking=true&result=true', {
     method: 'POST',
     body: JSON.stringify(requestBodyDelete ),
-    //	mode: 'no-cors',
     headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
    })
   
     
-    // API.del("cart", "/cart", {
-    //   body: {
-    //     bookId: this.props.order.bookId,
-    //   }
-    // });
+
 
     this.props.calculateTotal();
   }
