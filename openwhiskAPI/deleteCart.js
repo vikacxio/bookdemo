@@ -12,37 +12,43 @@ const uri = 'mongodb://user1:WDfh%23431@172.235.19.67:27017/bookstore?authSource
 
 
     // database and collection code goes here
-	  //
-	var cId = args.customerId.toString()
-	var bId = args.bookId.toString();
-	var p = parseFloat(args.price);
-	var q = parseInt(args.quantity);
     const db = client.db("bookstore");
     const coll = db.collection("mybookstore_cart");
-    
+          var bId="";
 
-	  var d = cId+ bId+ p + q;
-//	  return{result:d};
-	  // find code goes here
-    const data = await coll.insertOne({customerId: cId , bookId : bId ,price: p, quantity:q}) ;
+//	  console.log(Id);
+	  if(args.bookId){
+	  bId = args.bookId.toString();
+	  }
+	  const cId = args.customerId.toString();
+//	  const d = bId + 123 + cId;
+//	  return {"Hi": d}
+	  var query="";
+	  if(bId!=""){
 
-	 // console.log('Inserted document with id:', data.insertedId);
+	query ={ $and: [{bookId: bId}, {customerId: cId}]};
+	 }else{
+		  query = {customerId: cId};
+	 }
 
-
+//	  const query = {customerId : cId}
+    // find code goes here
+//	  console.log(cId);
+    const data = await coll.deleteMany(query);
     // iterate code goes here
-
+	
+        return{'Deleted documents': data.deletedCount};
     await client.close();
-	 return {"data" : data.insertedId};
-          //return{data};
+          
 	  //          ;
 	  //
 //	  console.log(data);
 
-}catch(error){
-	console.log(error);
-      //  return{error: error.message};
+}catch(error)
+{
+	//console.log(error);
+        return{error: error.message};
 }
 }
 
 exports.main = main;
-//main();

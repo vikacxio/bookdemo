@@ -13,10 +13,10 @@ const uri = 'mongodb://user1:WDfh%23431@172.235.19.67:27017/bookstore?authSource
 
     // database and collection code goes here
     const db = client.db("bookstore");
-    const coll = db.collection("mybookstore_cart");
-          var bId="";
+	  var bId="";
 
 //	  console.log(Id);
+    const coll = db.collection("mybookstore_cart");
 	  if(args.bookId){
 	  bId = args.bookId.toString();
 	  }
@@ -30,25 +30,28 @@ const uri = 'mongodb://user1:WDfh%23431@172.235.19.67:27017/bookstore?authSource
 	 }else{
 		  query = {customerId: cId};
 	 }
+	//  return {"hi" : query};
 
-//	  const query = {customerId : cId}
+//	  console.log(query);
     // find code goes here
-//	  console.log(cId);
-    const data = await coll.deleteMany(query);
+    const data = await coll.find(query).toArray();
     // iterate code goes here
-	
-        return{'Deleted documents': data.deletedCount};
+  //  console.log(data);
+//
+	  return {data}
     await client.close();
-          
-	  //          ;
+  //  return{data};
+	  //;
 	  //
 //	  console.log(data);
 
-}catch(error)
-{
+}catch(error){
 	console.log(error);
-        return{error: error.message};
+       // return{error: error.message};
 }
 }
+//main(11)
 
-exports.main = main;
+exports.main = main
+
+
