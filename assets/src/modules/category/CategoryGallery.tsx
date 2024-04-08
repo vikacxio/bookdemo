@@ -28,9 +28,9 @@ export class CategoryGallery extends React.Component<CategoryGalleryProps, Categ
       const response = await this.listBooks();
 
       let data = await response.json();
-      const filtered = data.data.filter((item:any) => item.category === `${this.props.match.params.id}`);
+      const filtered = data.data
 
-      console.log(filtered);
+      //console.log(filtered);
       this.setState({ books:filtered });
     } catch (e) {
       alert(e);
@@ -49,9 +49,14 @@ export class CategoryGallery extends React.Component<CategoryGalleryProps, Categ
 
 
      //new api call
-    return fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
+     const requestBody = {
+      category: this.props.match.params.id
+  };
+
+  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getBook?blocking=true&result=true', {
     method: 'POST',
-    headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+    body: JSON.stringify(requestBody),
+    headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
 
 

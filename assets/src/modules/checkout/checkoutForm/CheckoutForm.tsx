@@ -3,7 +3,7 @@ import { FormGroup, FormControl, ControlLabel, Form, FormControlProps } from "re
 
 import "./checkoutForm.css";
 import supportedCards from "../../../images/supportedCards.png";
-import { API } from "aws-amplify";
+//import { API } from "aws-amplify";
 import { Redirect } from "react-router";
 
 interface CheckoutFormProps {}
@@ -39,7 +39,7 @@ export class CheckoutForm extends React.Component<CheckoutFormProps, CheckoutFor
       this.setState({
         orders: orders
       });
-      console.log(orders)
+   
     } catch (e) {
       alert(e);
     }

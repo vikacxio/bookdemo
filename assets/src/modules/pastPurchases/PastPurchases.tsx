@@ -43,9 +43,9 @@ export default class PastPurchases extends Component<PastPurchasesProps, PastPur
       const response = await this.listOrders();
       let data = await response.json();
       const orders = data.data;
-      console.log(orders)
+    
    
-      console.log(orders);
+    
       this.setState({ 
         orders: orders,
         isLoading: false

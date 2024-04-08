@@ -29,7 +29,9 @@ export class CategoryGalleryTeaser extends React.Component<CategoryGalleryTeaser
 
       let response = await this.listBooks();
       let data = await response.json();
-      const filtered = data.data.filter((item:any) => item.category === "Cookbooks");
+   
+      const filtered= data.data;
+    //  const filtered = data.data.filter((item:any) => item.category === "Cookbooks");
 
       this.setState({ books:filtered });
     } catch (e) {
@@ -45,10 +47,14 @@ export class CategoryGalleryTeaser extends React.Component<CategoryGalleryTeaser
 
 
     //new api call
+    const requestBody = {
+      category: "Cookbooks"
+  };
 
-  return fetch('http://172.232.117.60:8000/booksdata?result=true&&blocking=true', {
+  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getBook?blocking=true&result=true', {
     method: 'POST',
-    headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+    body: JSON.stringify(requestBody),
+    headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
   
    }
