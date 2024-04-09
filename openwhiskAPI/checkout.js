@@ -11,72 +11,71 @@ const dbName = "bookstore"
 const orderCollectionName = 'mybookstore_orders';
 
 async function getNextOrderId(client) {
-    const db = client.db(dbName);
-    const result = await db.collection('order_sequence').findOneAndUpdate(
-        { _id: 'order_id' },
-        { $inc: { seq: 1 } },
-        { returnOriginal: false, upsert: true }
-    );
-	var jsonresult = JSON.stringify(result)
-	var parseresult = JSON.parse(jsonresult)
-	if (!jsonresult) {
-        // If document doesn't exist, initialize sequence number to 1
-        return 1;
-    
-	}
-    return parseresult.seq;
+  const db = client.db(dbName);
+  const result = await db.collection('order_sequence').findOneAndUpdate(
+    { _id: 'order_id' },
+    { $inc: { seq: 1 } },
+    { returnOriginal: false, upsert: true }
+  );
+  var jsonresult = JSON.stringify(result)
+  var parseresult = JSON.parse(jsonresult)
+
+  // If document doesn't exist, initialize sequence number to 1
+  if (!jsonresult) {
+
+    return 1;
+
+  }
+  return parseresult.seq;
 
 
 }
 
 // Function to insert an order with auto-generated orderId and auto-generated _id
-async function insertOrder(client, cId, book ,dt) {
- //	const jsonString = JSON.stringify(book);
+async function insertOrder(client, cId, book, dt) {
+  //	const jsonString = JSON.stringify(book);
 
-//	const books = JSON.parse(jsonString);
-//	const booksArray = Object.values(books);
-   const orderId = await getNextOrderId(client);
+  //	const books = JSON.parse(jsonString);
+  //	const booksArray = Object.values(books);
+  const orderId = await getNextOrderId(client);
 
-    const collection = client.db(dbName).collection(orderCollectionName);
+  const collection = client.db(dbName).collection(orderCollectionName);
 
-    await collection.insertOne({customerId: cId, orderId: orderId, books: book, orderDate: dt});
+  await collection.insertOne({ customerId: cId, orderId: orderId, books: book, orderDate: dt });
 
-  //  return {"Order inserted" : orderId}
 }
 
 
 
 
-async function deleteCart(client,cId, book)
-{
-	const jsonString = JSON.stringify(book);
+async function deleteCart(client, cId, book) {
+  const jsonString = JSON.stringify(book);
 
-	const books = JSON.parse(jsonString);
-//	const booksArray = Object.values(books);
-	
-		const db= client.db(dbName);
-		
-		const coll =  db.collection("mybookstore_cart");
+  const books = JSON.parse(jsonString);
 
-const deletePromises = books.map(async (item) => {
-        var bId = "";
-        if (item.bookId) {
-            bId = item.bookId;
-        }
+  const db = client.db(dbName);
 
-        var query = "";
-        if (bId !== "") {
-            
-	query ={ $and: [{bookId: bId}, {customerId: cId}]};
-	 }else{
-		  query = {customerId: cId};
-	 }
+  const coll = db.collection("mybookstore_cart");
 
-        return coll.deleteMany(query);
-    });
+  const deletePromises = books.map(async (item) => {
+    var bId = "";
+    if (item.bookId) {
+      bId = item.bookId;
+    }
 
-    await Promise.all(deletePromises);
-  //  return {"Deleted Data" :"Deleted all relevant documents from the cart"};
+    var query = "";
+    if (bId !== "") {
+
+      query = { $and: [{ bookId: bId }, { customerId: cId }] };
+    } else {
+      query = { customerId: cId };
+    }
+
+    return coll.deleteMany(query);
+  });
+
+  await Promise.all(deletePromises);
+
 
 }
 
@@ -87,30 +86,28 @@ const deletePromises = books.map(async (item) => {
 async function main(args) {
 
 
-        const client = await MongoClient.connect(uri);
-  try { 
+  const client = await MongoClient.connect(uri);
+  try {
 
 
+    var cId = args.customerId.toString()
+    var book = args.books;
+    var dt = Date.now();
 
-    // database and collection code goes here
-	  //
-	var cId = args.customerId.toString()
-	var book = args.books;
-	var dt = Date.now();
-	 
-	
-  await insertOrder(client, cId, book, dt);
-await deleteCart(client, cId, book);
 
-    	 return {"Data" : "Order Inserted"};
+    await insertOrder(client, cId, book, dt);
+    await deleteCart(client, cId, book);
 
-}catch(error){
-	return {"error": error};
+    return { "Data": "Order Inserted" };
 
-}finally{
-await client.close();
+  } catch (error) {
+    return { error: error.message };
 
-}}
+  } finally {
+    await client.close();
+
+  }
+}
 
 exports.main = main;
 

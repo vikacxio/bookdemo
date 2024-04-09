@@ -35,12 +35,11 @@ const uri = 'mongodb://user1:WDfh%23431@172.235.19.67:27017/bookstore?authSource
 	  await client.close();
     } catch(error){
 	    console.log(error);
-        // Close the MongoDB connection
+    
         
     }
 }
 
-// Run the main function
 main()
 
 

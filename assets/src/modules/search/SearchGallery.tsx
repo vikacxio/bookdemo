@@ -32,13 +32,13 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
       for (var i = 0; i < searchResults.hits.total.value; i++) {
         var hit = searchResults.hits.hits[i] && searchResults.hits.hits[i]._source;
         hit && books.push({
-          author: hit.author.S,
-          category: hit.category.S,
-          cover: hit.cover.S,
-          id: hit.id.S,
-          name: hit.name.S,
-          price: hit.price.N,
-          rating: hit.rating.N,
+          author: hit.author,
+          category: hit.category,
+          cover: hit.cover,
+          id: hit.id,
+          name: hit.name,
+          price: hit.price,
+          rating: hit.rating,
         });
       }
 
@@ -52,8 +52,26 @@ export class SearchGallery extends React.Component<SearchGalleryProps, SearchGal
     this.setState({ isLoading: false });
   }
 
-  searchBooks() {
-    return API.get("search", `/search?q=${this.props.match.params.id}`, null);
+  async searchBooks() {
+    //console.log(this.props.match.params.id);
+   // return API.get("search", `/search?q=${this.props.match.params.id}`, null);
+
+
+
+    const requestBodyCart = {
+      q: this.props.match.params.id
+  };
+
+  // new api call
+    const getCart = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/search?blocking=true&result=true', {
+    method: 'POST',
+    body: JSON.stringify(requestBodyCart),
+    headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+  })
+  const data = await getCart.json();
+ // console.log(data);
+  return data.body;
+
   }
 
   render() {
