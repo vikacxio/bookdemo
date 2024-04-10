@@ -1,4 +1,4 @@
-import { API } from 'aws-amplify';
+//import { API } from 'aws-amplify';
 import React from 'react';
 import { FriendThumb } from './FriendThumb';
 
@@ -19,14 +19,44 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
     };
   }
 
-  getFriends = () => {
-    return API.get("recommendations", `/recommendations/${this.props.bookId}`, null);
+  getFriends = async (id: string) => {
+    //return API.get("recommendations", `/recommendations/${this.props.bookId}`, null);
+
+    
+    console.log(id);
+    const requestBody = {
+      customerId:"bovyva@closetab.email",
+      bookId: id
+    };
+
+  const bookOrder = await fetch('http://172.105.55.215:3233/api/v1/namespaces/_/actions/getRecommendationsByBook?blocking=true&result=true', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+    });
+    let data = await bookOrder.json();
+
+    console.log(data)
+
+   return data;
+
+
   }
 
   async componentDidMount() {
     try {
-      const friends = await this.getFriends();
-      this.setState({ friends });
+      console.log(this.props.bookId);
+      const friendsData = await this.getFriends(this.props.bookId);
+      console.log(friendsData)
+
+      const customerIds = friendsData.getFriendsCustomerList.records.map((record: { _fields: { properties: { customerId: any; }; }[]; }) => record._fields[0].properties.customerId);
+
+      console.log(friendsData.getFriendsCustomerList.records);
+      this.setState(prevState => ({
+        friends: prevState.friends.concat(customerIds)
+      }));
+    
+
     } catch (e) {
       alert(e);
     }
@@ -44,7 +74,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
       <div>
         <div>Friends who bought this book</div>
         <p>
-          {friends.slice(0, 3).map((friend: any) => <FriendThumb key={friend} />)}
+          {friends.slice(0, 3).map((friend: any) => <FriendThumb key={friend} friends={[]} />)}
           {numFriendsPurchased > 3 && <span className="orange">{` +${numFriendsPurchased - 3} ${(numFriendsPurchased - 3) > 1 ? "others" : "other"}`}</span>}
         </p>
       </div>
