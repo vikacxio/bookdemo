@@ -57,7 +57,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
       this.setState(prevState => ({
         friends: prevState.friends.concat(customerIds)
       }));
-    console.log(this.state.friends)
+   // console.log(this.state.friends)
 
     } catch (e) {
       alert(e);
@@ -76,14 +76,14 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
     const numFriendsPurchased = this.state.friends.length;
     //console.log(numFriendsPurchased)
     const friends = this.state.friends;
-    console.log(friends);
+    //console.log(friends);
     return (
       <div>
         <div>Friends who bought this book</div>
-        <p>
+        
           <FriendThumb  friends={friends} />
           {numFriendsPurchased > 3 && <span className="orange">{` +${numFriendsPurchased - 3} ${(numFriendsPurchased - 3) > 1 ? "others" : "other"}`}</span>}
-        </p>
+        
       </div>
     );
   }

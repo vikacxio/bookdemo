@@ -1,10 +1,13 @@
 import React from "react";
 import "../../common/styles/productRow.css";
 import StarRating from "../../common/starRating/StarRating";
-import { API } from "aws-amplify";
+//import { API } from "aws-amplify";
 import AddToCart from "../../common/AddToCart";
 import FriendRecommendations from "../../common/friendRecommendations/FriendRecommendations";
+
 import { Book } from "../bestSellers/BestSellerProductRow";
+
+//console.log("hello from product row")
 
 interface ProductRowProps {
   bookId: string;
@@ -17,6 +20,7 @@ interface ProductRowState {
 export class ProductRow extends React.Component<ProductRowProps, ProductRowState> {
   constructor(props: ProductRowProps) {
     super(props);
+    //console.log(this.props.bookId)
 
     this.state = {
       book: undefined,
@@ -30,6 +34,7 @@ export class ProductRow extends React.Component<ProductRowProps, ProductRowState
     //   .catch(error => alert(error));
 
     try {
+      
       const book = await this.getBook(this.props.bookId);
 
       this.setState({ book });

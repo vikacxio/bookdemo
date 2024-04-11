@@ -42,8 +42,24 @@ export class ProductRow extends React.Component<ProductRowProps, ProductRowState
     }
   }
 
-  getBook() {
-    return API.get("books", `/books/${this.props.bookId}`, null);
+  async getBook() {
+    //return API.get("books", `/books/${this.props.bookId}`, null);
+    
+    const requestBody = {
+      customerId:"bovyva@closetab.email",
+      bookId: this.props.bookId
+    }
+
+  const bookOrder = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getBook?blocking=true&result=true', {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
+    });
+    let data = await bookOrder.json();
+    const filtered = data.data;
+
+
+   return filtered[0];
   }
 
   render() {

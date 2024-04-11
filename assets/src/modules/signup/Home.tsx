@@ -8,7 +8,7 @@ import { CategoryNavBar } from "../category/categoryNavBar/CategoryNavBar";
 import { SearchBar } from "../search/searchBar/SearchBar";
 //import { BestSellersBar } from "../bestSellers/bestSellersBar/BestSellersBar";
 import { CategoryGalleryTeaser } from "../category/CategoryGalleryTeaser";
-//import { FriendsBought } from "../friends/FriendsBought";
+import { FriendsBought } from "../friends/FriendsBought";
 import { LinkContainer } from "react-router-bootstrap";
 import "./home.css";
 
@@ -123,7 +123,8 @@ export default class Home extends Component<HomeProps, HomeState> {
           </div>
         </div>
         <CategoryGalleryTeaser />
-      {/*  <FriendsBought />*/}
+        
+        <FriendsBought />
       </div>
     );
   }

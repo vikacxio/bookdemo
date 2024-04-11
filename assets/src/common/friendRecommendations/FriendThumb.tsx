@@ -1,12 +1,12 @@
 import React from "react";
 
-import Brenda from "../../images/avatars/Brenda.png";
-import Erin from "../../images/avatars/Erin.png";
+// import Brenda from "../../images/avatars/Brenda.png";
+// import Erin from "../../images/avatars/Erin.png";
 import Jacob from "../../images/avatars/Jacob.png";
-import Jeff from "../../images/avatars/Jeff.png";
-import Jennifer from "../../images/avatars/Jennifer.png";
-import John from "../../images/avatars/John.png";
-import Sarah from "../../images/avatars/Sarah.png";
+// import Jeff from "../../images/avatars/Jeff.png";
+// import Jennifer from "../../images/avatars/Jennifer.png";
+// import John from "../../images/avatars/John.png";
+// import Sarah from "../../images/avatars/Sarah.png";
 
 //const friendsImage = [Brenda, Erin, Jacob, Jeff, Jennifer, John, Sarah];
 
@@ -26,8 +26,8 @@ export class FriendThumb extends React.Component<FriendThumbProps> {
 
   render() {
     const { friends } = this.props; 
-    console.log(friends);
-    console.log("hi from friend thumb")
+    //console.log(friends);
+    //console.log("hi from friend thumb")
     
    // const image = friendsImage[Math.floor(Math.random() * friendsImage.length)];
     return (
