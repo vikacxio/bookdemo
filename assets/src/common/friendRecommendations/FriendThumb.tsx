@@ -1,14 +1,14 @@
 import React from "react";
 
 import Brenda from "../../images/avatars/Brenda.png";
-// import Erin from "../../images/avatars/Erin.png";
-// import Jacob from "../../images/avatars/Jacob.png";
-// import Jeff from "../../images/avatars/Jeff.png";
-// import Jennifer from "../../images/avatars/Jennifer.png";
-// import John from "../../images/avatars/John.png";
-// import Sarah from "../../images/avatars/Sarah.png";
+import Erin from "../../images/avatars/Erin.png";
+import Jacob from "../../images/avatars/Jacob.png";
+import Jeff from "../../images/avatars/Jeff.png";
+import Jennifer from "../../images/avatars/Jennifer.png";
+import John from "../../images/avatars/John.png";
+import Sarah from "../../images/avatars/Sarah.png";
 
-//const friends = [Brenda, Erin, Jacob, Jeff, Jennifer, John, Sarah];
+//const friendsImage = [Brenda, Erin, Jacob, Jeff, Jennifer, John, Sarah];
 
 interface FriendThumbProps {
   friends: any[]
@@ -19,11 +19,17 @@ export class FriendThumb extends React.Component<FriendThumbProps> {
 
   constructor(props: FriendThumbProps) {
     super(props);
+    
+
   
   }
+
   render() {
     const { friends } = this.props; 
-    const randomFriend = friends[Math.floor(Math.random() * friends.length)];
+    console.log(friends);
+    console.log("hi from friend thumb")
+    
+   // const image = friendsImage[Math.floor(Math.random() * friendsImage.length)];
     return (
 
       <div>
@@ -31,7 +37,8 @@ export class FriendThumb extends React.Component<FriendThumbProps> {
       {friends.map((friend, index) => (
         <li key={index}>
           {/* Use friend as src and alt for each img */}
-          <img className="friend-thumb" src={Brenda} alt={friend} />
+          <img className="friend-thumb" src={Jacob} alt={friend} />
+          <span>{friend}</span>
         </li>
       ))}
       </div>

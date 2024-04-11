@@ -1,6 +1,6 @@
 //import { API } from 'aws-amplify';
 import React from 'react';
-import { FriendThumb } from './FriendThumb';
+import  FriendThumb  from './FriendThumb';
 
 interface FriendRecommendationsProps {
   bookId: string;
@@ -13,6 +13,7 @@ interface FriendRecommendationsState {
 class FriendRecommendations extends React.Component<FriendRecommendationsProps, FriendRecommendationsState> {
   constructor(props: FriendRecommendationsProps) {
     super(props);
+  //  console.log("hi from constructor")
 
     this.state = {
       friends: []
@@ -23,7 +24,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
     //return API.get("recommendations", `/recommendations/${this.props.bookId}`, null);
 
     
-    console.log(id);
+    //console.log(id);
     const requestBody = {
       customerId:"bovyva@closetab.email",
       bookId: id
@@ -36,7 +37,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
     });
     let data = await bookOrder.json();
 
-    console.log(data)
+    //console.log(data)
 
    return data;
 
@@ -45,17 +46,18 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
 
   async componentDidMount() {
     try {
-      console.log(this.props.bookId);
+     // console.log(this.props.bookId);
+     // console.log("from recommendation")
       const friendsData = await this.getFriends(this.props.bookId);
-      console.log(friendsData)
+      //console.log(friendsData)               
 
       const customerIds = friendsData.getFriendsCustomerList.records.map((record: { _fields: { properties: { customerId: any; }; }[]; }) => record._fields[0].properties.customerId);
 
-      console.log(friendsData.getFriendsCustomerList.records);
+     // console.log(customerIds);
       this.setState(prevState => ({
         friends: prevState.friends.concat(customerIds)
       }));
-    
+    console.log(this.state.friends)
 
     } catch (e) {
       alert(e);
@@ -64,17 +66,22 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
 
   render() {
     // No recommendations to show
-    if (!(this.state.friends[0] && this.state.friends[0].friendsPurchased && this.state.friends[0].friendsPurchased.length > 0)) {
+    if (!(this.state.friends &&  this.state.friends.length > 0)) {
       return <div className="no-friends-padding" />
     }
+    // if (!(this.state.friends[0] && this.state.friends[0].friendsPurchased && this.state.friends[0].friendsPurchased.length > 0)) {
+    //   return <div className="no-friends-padding" />
+    // }
     
-    const numFriendsPurchased = this.state.friends[0].friendsPurchased.length;
-    const friends = this.state.friends[0].friendsPurchased;
+    const numFriendsPurchased = this.state.friends.length;
+    //console.log(numFriendsPurchased)
+    const friends = this.state.friends;
+    console.log(friends);
     return (
       <div>
         <div>Friends who bought this book</div>
         <p>
-          {friends.slice(0, 3).map((friend: any) => <FriendThumb key={friend} friends={[]} />)}
+          <FriendThumb  friends={friends} />
           {numFriendsPurchased > 3 && <span className="orange">{` +${numFriendsPurchased - 3} ${(numFriendsPurchased - 3) > 1 ? "others" : "other"}`}</span>}
         </p>
       </div>

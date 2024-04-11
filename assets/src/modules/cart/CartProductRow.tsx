@@ -35,15 +35,22 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
 
   async componentDidMount() {
     try {
+      
       const book = await this.getBook(this.props.order);
       
       this.setState({ book });
+     // console.log(this.state.book);
+     // console.log("books")
     } catch (e) {
       alert(e);
     }
   }
 
   async getBook(order: Order) {
+    //console.log(order)
+
+  //  console.log(order.bookId+ "from getbook");
+   // console.log(fromb)
 
     //old api call
     //return API.get("books", `/books/${order.bookId}`, null);
@@ -52,8 +59,9 @@ export class CartProductRow extends React.Component<CartProductRowProps, CartPro
 
     const requestBody = {
       bookId: order.bookId
+      
   };
-  console.log(order.bookId)
+  //console.log(order.bookId)
 
   const bookOrder= await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getBook?blocking=true&result=true', {
     method: 'POST',
