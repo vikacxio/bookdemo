@@ -41,7 +41,7 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
     //const bookInCart = await API.get("cart", `/cart/${this.props.bookId}`, null);
 
     //new api call
-    const bookCartData = await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getCart?blocking=true&result=true', {
+    const bookCartData = await fetch('http://172.232.117.60:8000/getCart?blocking=true&result=true', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: { 
@@ -75,7 +75,7 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
         bookId: this.props.bookId,
       quantity: bookInCart.quantity + 1
     };
-      fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/updateCart?blocking=true&result=true', {
+      fetch('http://172.232.117.60:8000/updateCart?blocking=true&result=true', {
       method: 'POST',
       body: JSON.stringify(requestBodyUpdate),
       //	mode: 'no-cors',
@@ -110,7 +110,7 @@ class AddToCart extends React.Component<AddToCartProps, AddToCartState> {
       // }));
 
     //new api call
-     await fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/mongocart?blocking=true&result=true', {
+     await fetch('http://172.232.117.60:8000/mongocart?blocking=true&result=true', {
       method: 'POST',
       body: JSON.stringify(requestBodyCart),
       headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }

@@ -30,7 +30,7 @@ class FriendRecommendations extends React.Component<FriendRecommendationsProps, 
       bookId: id
     };
 
-  const bookOrder = await fetch('http://172.105.55.215:3233/api/v1/namespaces/_/actions/getRecommendationsByBook?blocking=true&result=true', {
+  const bookOrder = await fetch('http://172.232.117.60:8000/getRecommendationsByBook?blocking=true&result=true', {
     method: 'POST',
     body: JSON.stringify(requestBody),
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }

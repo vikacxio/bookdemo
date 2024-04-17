@@ -53,7 +53,7 @@ export class CategoryGallery extends React.Component<CategoryGalleryProps, Categ
       category: this.props.match.params.id
   };
 
-  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/getBook?blocking=true&result=true', {
+  return fetch('http://172.232.117.60:8000/getBook?blocking=true&result=true', {
     method: 'POST',
     body: JSON.stringify(requestBody),
     headers: { 'Content-Type': 'application/json',  'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }

@@ -63,7 +63,7 @@ listOrders() {
 
 
   //new api call
-  return fetch('http://172.232.117.60:3233/api/v1/namespaces/_/actions/orderlist?result=true&&blocking=true', {
+  return fetch('http://172.232.117.60:8000/orderlist?result=true&&blocking=true', {
     method: 'POST',
     headers: { 'Authorization': 'Basic ' + btoa('23bc46b1-71f6-4ed5-8c54-816aa4f8c502:123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP') }
   });
